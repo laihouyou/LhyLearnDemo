@@ -1,0 +1,72 @@
+package com.example.administrator.lhylearndemo.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.administrator.lhylearndemo.R;
+import com.example.administrator.lhylearndemo.activity.ChatActivity;
+import com.example.administrator.lhylearndemo.activity.TextFragmentActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+    private Context mContext;
+    private String [] mDataList;
+
+    public MyRecyclerViewAdapter(Context context,String[] dataList){
+        this.mContext=context;
+        this.mDataList=dataList;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(mContext).inflate(R.layout.item_recyclerview,parent,false);
+        ViewHolder viewHolder=new ViewHolder(view);
+        viewHolder.textView=view.findViewById(R.id.textview);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        holder.textView.setText(mDataList[position]);
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext,"点击了第"+position+1+"项",Toast.LENGTH_LONG).show();
+                switch (position){
+                    case 0:
+                        mContext.startActivity(new Intent(mContext,ChatActivity.class));
+                        break;
+                    case 1:
+                        mContext.startActivity(new Intent(mContext,TextFragmentActivity.class));
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataList.length;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+        private AppCompatTextView textView;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+}
