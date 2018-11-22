@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
+import com.example.administrator.lhylearndemo.broadcast.activity.BroadcastTestActivity;
 import com.example.administrator.lhylearndemo.activity.ChatActivity;
 import com.example.administrator.lhylearndemo.activity.TextFragmentActivity;
 
@@ -46,6 +47,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         break;
                     case 1:
                         mContext.startActivity(new Intent(mContext,TextFragmentActivity.class));
+                        break;
+                    case 2:
+                        mContext.startActivity(new Intent(mContext,BroadcastTestActivity.class));
                         break;
                 }
             }
