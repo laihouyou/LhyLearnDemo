@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RuntimePermissionTest</string>
+
+    <string name="ed_hint">请输入电话号码</string>
+    <string name="ed_hint2">点击拨打电话</string>
+    <string name="ed_hint3">权限获取失败，请重新授权</string>
+</resources>

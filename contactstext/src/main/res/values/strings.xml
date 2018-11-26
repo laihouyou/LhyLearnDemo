@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ContactsText</string>
+    <string name="app_name2">点击获取\刷新联系人列表</string>
+    <string name="app_name3">获取联系人权限失败，请重新授权</string>
+</resources>
