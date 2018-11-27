@@ -13,4 +13,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="msg1">启动服务</string>
+    <string name="msg2">关闭服务</string>
+    <string name="msg3">活动绑定服务</string>
+    <string name="msg4">活动解除绑定服务</string>
+
 </resources>
