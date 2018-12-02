@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends BaseActivity {
-    private String [] mDataList={"recycleview制作聊天界面","fragment动态加载，返回栈","广播接收器","服务"};
+    private String [] mDataList={"recycleview制作聊天界面","fragment动态加载，返回栈","广播接收器","服务","完整下载例子"};
     private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

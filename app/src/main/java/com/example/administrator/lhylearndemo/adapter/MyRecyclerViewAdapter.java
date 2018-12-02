@@ -12,6 +12,7 @@ import com.example.administrator.lhylearndemo.broadcast.activity.BroadcastTestAc
 import com.example.administrator.lhylearndemo.activity.ChatActivity;
 import com.example.administrator.lhylearndemo.activity.TextFragmentActivity;
 import com.example.administrator.lhylearndemo.day5_service.activity.ServiceTextActivity;
+import com.example.administrator.lhylearndemo.day6_downtest.DwonloadActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -54,6 +55,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         break;
                     case 3:
                         mContext.startActivity(new Intent(mContext,ServiceTextActivity.class));
+                        break;
+                    case 4:
+                        mContext.startActivity(new Intent(mContext,DwonloadActivity.class));
                         break;
                 }
             }

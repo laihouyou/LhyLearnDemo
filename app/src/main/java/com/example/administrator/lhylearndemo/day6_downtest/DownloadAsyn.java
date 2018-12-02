@@ -81,7 +81,7 @@ public class DownloadAsyn extends AsyncTask<String,Integer,Integer> {
                         return TYPE_PAUSED;
                     }else {
                         total+=len;
-                        accessFile.write(bytes,total,len);
+                        accessFile.write(bytes,0,len);
 
                         //计算下载进度
                         int prguess=(int)((total+downFileSize)*100/contextDownSize);
@@ -145,5 +145,15 @@ public class DownloadAsyn extends AsyncTask<String,Integer,Integer> {
                 downloadLinstener.onCanceled();
                 break;
         }
+    }
+
+
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
+
+    public void setCancaled(boolean cancaled) {
+        isCancaled = cancaled;
     }
 }
