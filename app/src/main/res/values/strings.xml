@@ -23,5 +23,10 @@
     <string name="msg7">取消下载</string>
     <string name="msg8">权限申请成功</string>
     <string name="msg9">权限未申请</string>
+    <string name="msg10">下载中...</string>
+    <string name="msg11">下载已完成</string>
+    <string name="msg12">下载失败</string>
+    <string name="msg13">下载已暂停</string>
+    <string name="msg14">下载已取消</string>
 
 </resources>

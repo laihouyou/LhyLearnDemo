@@ -1,27 +1,25 @@
 package com.example.administrator.lhylearndemo.day6_downtest;
 
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
 
-import java.io.File;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,11 +28,12 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class DwonloadActivity extends AppCompatActivity  implements View.OnClickListener,DownloadLinstener {
+public class DwonloadActivity extends AppCompatActivity  implements View.OnClickListener {
     private AppCompatTextView progressText;
     private ProgressBar progressBar;
 
     private DwonloadService.DwonloadBudle budle;
+    private MyHandler myHandler;
 
     private static final String url="https://dl.google.com/dl/android/studio/install/3.2.0.26/android-studio-ide-181.5014246-windows.exe";
     private Context context;
@@ -59,18 +58,29 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
     }
 
     private void initPamean() {
+        List<String> permissionList=new ArrayList<>();
         if (ContextCompat.checkSelfPermission
                 (this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                !=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this
-                    ,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},10);
+                ==PackageManager.PERMISSION_GRANTED){
+//            if (!isShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+//            }
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
         if (ContextCompat.checkSelfPermission
                 (this,Manifest.permission.INTERNET)
-                !=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this
-                    ,new String[]{Manifest.permission.INTERNET},11);
+                    ==PackageManager.PERMISSION_GRANTED){
+//            if (!isShowRequestPermissionRationale(Manifest.permission.INTERNET)){
+//            }
+            permissionList.add(Manifest.permission.INTERNET);
         }
+        if (!permissionList.isEmpty()){
+            ActivityCompat.requestPermissions(this
+                    ,new String[permissionList.size()],10);
+        }
+    }
+
+    private boolean isShowRequestPermissionRationale(String permission){
+        return ActivityCompat.shouldShowRequestPermissionRationale(this,permission);
     }
 
     private void initView() {
@@ -82,15 +92,14 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
         canceledDwonload.setOnClickListener(this);
         progressText=findViewById(R.id.progressText);
         progressBar=findViewById(R.id.progressBar);
+        myHandler=new MyHandler(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.startDwonload:
-//                Notification notification=getNotification("正在下载",-1);
-//                getNotificationManager().notify(1,notification);
-                budle.startDwonload(url,this);
+                budle.startDwonload(url,myHandler);
                 break;
             case R.id.pausedDwonload:
                 budle.pausedDwonload();
@@ -101,61 +110,45 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
         }
     }
 
-    @Override
-    public void onProgess(int progess) {
-        progressBar.setProgress(progess);
-        progressText.setText(progess+"%");
+    private static class MyHandler extends Handler{
+        private final WeakReference<DwonloadActivity> mActivity;
 
-//        Notification notification=getNotification("下载出错",-progess);
-//        getNotificationManager().notify(1,notification);
-    }
+        public MyHandler(DwonloadActivity activity){
+            this.mActivity=new WeakReference<>(activity);
+        }
 
-    @Override
-    public void onSuccess() {
-//        getNotificationManager().notify(1,getNotification("下载已完成",-1));
-        progressText.setText("下载已完成");
-    }
-
-    @Override
-    public void onFailed() {
-        progressText.setText("下载出错");
-        budle.onFailed();
-//        Notification notification=getNotification("下载出错",-1);
-//        getNotificationManager().notify(1,notification);
-    }
-
-    @Override
-    public void onPaused() {
-        progressText.setText("下载已暂停");
-    }
-
-    @Override
-    public void onCanceled() {
-//        getNotificationManager().notify(1,getNotification("下载已取消",-1));
-        progressText.setText("下载已取消");
-
-        String downFileName=url.substring(url.lastIndexOf("/"));
-        String directoy=Environment
-                .getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS).getPath();
-        File file=new File(directoy+downFileName);
-        if (file.exists()){
-            file.delete();
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            DwonloadActivity activity=mActivity.get();
+            if (activity!=null){
+               switch (msg.what){
+                   case 1:
+                       Bundle bundle=msg.getData();
+                       if (bundle!=null){
+                           int progess=bundle.getInt("progess");
+                           activity.progressText.setText(progess+"%");
+                           activity.progressBar.setProgress(progess);
+                       }
+                       break;
+               }
+            }
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==10&&grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this,getString(R.string.msg8),Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,getString(R.string.msg9),Toast.LENGTH_LONG).show();
-        }
-        if (requestCode==11&&grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this,getString(R.string.msg8),Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,getString(R.string.msg9),Toast.LENGTH_LONG).show();
+        if (requestCode==10){
+            if (grantResults.length>0){
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i]==PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(this,getString(R.string.msg8),Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(this,getString(R.string.msg9),Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
         }
     }
 
@@ -170,35 +163,6 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
 
         }
     } ;
-
-    private NotificationManager getNotificationManager(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            if (manager == null)
-                return  null;
-            manager.createNotificationChannel(channel);
-            return manager;
-        }else {
-            return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-    }
-
-    private Notification getNotification(String title,int progess){
-        Intent intent=new Intent(this,DwonloadActivity.class);
-        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
-        Notification.Builder notification=new Notification.Builder(this);
-        notification.setContentTitle(title)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
-                .setContentIntent(pendingIntent);
-        if (progess>0){
-            notification.setContentText(progess+"%");
-            notification.setProgress(100,progess,false);
-        }
-
-        return notification.build();
-    }
 
     @Override
     protected void onDestroy() {

@@ -1,42 +1,102 @@
 package com.example.administrator.lhylearndemo.day6_downtest;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Binder;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
 
+import java.io.File;
+
+import androidx.core.app.NotificationCompat;
+
 public class DwonloadService extends Service {
     private DwonloadBudle budle=new DwonloadBudle();
     private DownloadAsyn downloadAsyn;
+    private String dwonloadUrl;
+    private Handler myHandler;
 
     public DwonloadService() {
     }
 
+    private DownloadLinstener downloadLinstener=new DownloadLinstener() {
+        @Override
+        public void onProgess(int progess) {
+            getNotificationManager().notify(10,getNotification(getString(R.string.msg10),progess));
+            Message message=new Message();
+            message.what=1;
+            Bundle bundle=new Bundle();
+            bundle.putInt("progess",progess);
+            message.setData(bundle);
+            myHandler.sendMessage(message);
+        }
+
+        @Override
+        public void onSuccess() {
+            downloadAsyn=null;
+            stopForeground(true);
+            getNotificationManager().notify(10,getNotification(getString(R.string.msg11),-1));
+            Toast.makeText(DwonloadService.this,getString(R.string.msg11),Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onFailed() {
+            downloadAsyn=null;
+            stopForeground(true);
+            getNotificationManager().notify(10,getNotification(getString(R.string.msg12),-1));
+            Toast.makeText(DwonloadService.this,getString(R.string.msg12),Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onPaused() {
+            downloadAsyn=null;
+            Toast.makeText(DwonloadService.this,getString(R.string.msg13),Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCanceled() {
+            downloadAsyn=null;
+            stopForeground(true);
+            getNotificationManager().notify(10,getNotification(getString(R.string.msg14),-1));
+            Toast.makeText(DwonloadService.this,getString(R.string.msg14),Toast.LENGTH_LONG).show();
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
-//
-//            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            if (manager == null)
-//                return;
-//            manager.createNotificationChannel(channel);
-//
-//            Notification notification = new NotificationCompat.Builder(this, "xxx")
-//                    .setAutoCancel(true)
-//                    .setCategory(Notification.CATEGORY_SERVICE)
-//                    .setOngoing(true)
-//                    .setPriority(NotificationManager.IMPORTANCE_LOW)
-//                    .build();
-//
-//            startForeground(101, notification);
-//
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
+
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager == null)
+                return;
+            manager.createNotificationChannel(channel);
+
+            Notification notification = new NotificationCompat.Builder(this, "xxx")
+                    .setAutoCancel(true)
+                    .setCategory(Notification.CATEGORY_SERVICE)
+                    .setOngoing(true)
+                    .setPriority(NotificationManager.IMPORTANCE_LOW)
+                    .build();
+
+            startForeground(101, notification);
+
+        }
     }
 
     @Override
@@ -45,19 +105,16 @@ public class DwonloadService extends Service {
     }
 
     class DwonloadBudle extends Binder {
-        public void startDwonload(String url, DownloadLinstener linstener){
+        public void startDwonload(String url, Handler handler){
             if (downloadAsyn==null){
-                downloadAsyn=new DownloadAsyn(linstener);
+                dwonloadUrl=url;
+                myHandler=handler;
+                downloadAsyn=new DownloadAsyn(downloadLinstener);
                 downloadAsyn.execute(url);
-                Toast.makeText(getBaseContext(),getText(R.string.msg5),Toast.LENGTH_LONG).show();
-//                startForeground(1,notification);
+                startForeground(1,getNotification(getString(R.string.msg5),0));
+                Toast.makeText(DwonloadService.this,getText(R.string.msg5),Toast.LENGTH_LONG).show();
             }
         }
-
-        public void onFailed( ){
-//            stopForeground(true);
-        }
-
 
         public void pausedDwonload(){
             if (downloadAsyn!=null){
@@ -67,9 +124,49 @@ public class DwonloadService extends Service {
         public void canceledDwonload(){
             if (downloadAsyn!=null){
                 downloadAsyn.setCancaled(true);
-//                stopForeground(true);
+            }else {
+                String downFileName=dwonloadUrl.substring(dwonloadUrl.lastIndexOf("/"));
+                String directoy=Environment
+                        .getExternalStoragePublicDirectory(
+                                Environment.DIRECTORY_DOWNLOADS).getPath();
+                File file=new File(directoy+downFileName);
+                if (file.exists()){
+                    file.delete();
+                }
+                getNotificationManager().cancel(10);
+                stopForeground(true);
+                Toast.makeText(DwonloadService.this,getText(R.string.msg14),Toast.LENGTH_LONG).show();
             }
+        }
+
+    }
+
+    private NotificationManager getNotificationManager(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (manager == null)
+                return  null;
+            manager.createNotificationChannel(channel);
+            return manager;
+        }else {
+            return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
     }
 
+    private Notification getNotification(String title, int progess){
+        Intent intent=new Intent(this,DwonloadActivity.class);
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
+        Notification.Builder notification=new Notification.Builder(this);
+        notification.setContentTitle(title)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+                .setContentIntent(pendingIntent);
+        if (progess>0){
+            notification.setContentText(progess+"%");
+            notification.setProgress(100,progess,false);
+        }
+
+        return notification.build();
+    }
 }
