@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,20 +12,18 @@ import android.os.IBinder;
 import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
+import com.example.administrator.lhylearndemo.utils.RxPermissionsUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 public class DwonloadActivity extends AppCompatActivity  implements View.OnClickListener {
     private AppCompatTextView progressText;
@@ -35,7 +32,7 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
     private DwonloadService.DwonloadBudle budle;
     private MyHandler myHandler;
 
-    private static final String url="https://dl.google.com/dl/android/studio/install/3.2.0.26/android-studio-ide-181.5014246-windows.exe";
+    private static final String url="http://mapopen-pub-androidsdk.cdn.bcebos.com/map/sample/BaiduLBS_AndroidSDK_Sample.zip";
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +52,6 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
             startService(intent);
         }
         bindService(intent,serviceConnection,BIND_AUTO_CREATE);
-    }
-
-    private void initPamean() {
-        List<String> permissionList=new ArrayList<>();
-        if (ContextCompat.checkSelfPermission
-                (this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                ==PackageManager.PERMISSION_GRANTED){
-//            if (!isShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-//            }
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (ContextCompat.checkSelfPermission
-                (this,Manifest.permission.INTERNET)
-                    ==PackageManager.PERMISSION_GRANTED){
-//            if (!isShowRequestPermissionRationale(Manifest.permission.INTERNET)){
-//            }
-            permissionList.add(Manifest.permission.INTERNET);
-        }
-        if (!permissionList.isEmpty()){
-            ActivityCompat.requestPermissions(this
-                    ,new String[permissionList.size()],10);
-        }
     }
 
     private boolean isShowRequestPermissionRationale(String permission){
@@ -111,8 +86,8 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
     }
 
     private static class MyHandler extends Handler{
-        private final WeakReference<DwonloadActivity> mActivity;
 
+        private final WeakReference<DwonloadActivity> mActivity;
         public MyHandler(DwonloadActivity activity){
             this.mActivity=new WeakReference<>(activity);
         }
@@ -134,23 +109,33 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
                }
             }
         }
+
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==10){
-            if (grantResults.length>0){
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults[i]==PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(this,getString(R.string.msg8),Toast.LENGTH_LONG).show();
-                    }else {
-                        Toast.makeText(this,getString(R.string.msg9),Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        }
+    private void initPamean() {
+        List<String> permissionList=new ArrayList<>();
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissionList.add(Manifest.permission.INTERNET);
+
+        RxPermissionsUtil.requestEachRxPermission(this,new String[]{Manifest.permission.INTERNET,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE});
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode==10){
+//            if (grantResults.length>0){
+//                for (int i = 0; i < grantResults.length; i++) {
+//                    if (grantResults[i]==PackageManager.PERMISSION_GRANTED){
+//                        Toast.makeText(this,getString(R.string.msg8),Toast.LENGTH_LONG).show();
+//                    }else {
+//                        Toast.makeText(this,getString(R.string.msg9),Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private ServiceConnection serviceConnection=new ServiceConnection() {
         @Override

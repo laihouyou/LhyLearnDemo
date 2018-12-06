@@ -1,1 +1,1 @@
-include ':app', ':runtimepermissiontest', ':contactstext'
+include ':app', ':contactstext', ':rxpermissions'

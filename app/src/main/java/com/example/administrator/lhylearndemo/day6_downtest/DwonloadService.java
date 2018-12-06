@@ -29,6 +29,9 @@ public class DwonloadService extends Service {
     private String dwonloadUrl;
     private Handler myHandler;
 
+    String NOTIFICATION_CHANNEL_ID = "com.example.lhy";
+    String channelName = "My Dwonload Service";
+
     public DwonloadService() {
     }
 
@@ -79,22 +82,21 @@ public class DwonloadService extends Service {
     public void onCreate() {
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager == null)
                 return;
             manager.createNotificationChannel(channel);
 
-            Notification notification = new NotificationCompat.Builder(this, "xxx")
+            Notification notification = new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID)
                     .setAutoCancel(true)
                     .setCategory(Notification.CATEGORY_SERVICE)
                     .setOngoing(true)
                     .setPriority(NotificationManager.IMPORTANCE_LOW)
                     .build();
 
-            startForeground(101, notification);
+            startForeground(1, notification);
 
         }
     }
@@ -143,7 +145,7 @@ public class DwonloadService extends Service {
 
     private NotificationManager getNotificationManager(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("xxx", "xxx", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager == null)
                 return  null;
@@ -166,7 +168,9 @@ public class DwonloadService extends Service {
             notification.setContentText(progess+"%");
             notification.setProgress(100,progess,false);
         }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notification.setChannelId(NOTIFICATION_CHANNEL_ID);
+        }
         return notification.build();
     }
 }
