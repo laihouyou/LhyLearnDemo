@@ -12,11 +12,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.example.administrator.lhylearndemo.day6_downtest.Contest.*;
+
 public class DownloadAsyn extends AsyncTask<String,Integer,Integer> {
-    private static final int TYPE_SUCCESS=0;
-    private static final int TYPE_FAILED=1;
-    private static final int TYPE_PAUSED=2;
-    private static final int TYPE_CANCALED=3;
 
     private DownloadLinstener downloadLinstener;
 

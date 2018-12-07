@@ -40,7 +40,7 @@ public class DwonloadService extends Service {
         public void onProgess(int progess) {
             getNotificationManager().notify(10,getNotification(getString(R.string.msg10),progess));
             Message message=new Message();
-            message.what=1;
+            message.what=Contest.TYPE_DWONLOADING;
             Bundle bundle=new Bundle();
             bundle.putInt("progess",progess);
             message.setData(bundle);
@@ -53,6 +53,9 @@ public class DwonloadService extends Service {
             stopForeground(true);
             getNotificationManager().notify(10,getNotification(getString(R.string.msg11),-1));
             Toast.makeText(DwonloadService.this,getString(R.string.msg11),Toast.LENGTH_LONG).show();
+            Message message=new Message();
+            message.what=Contest.TYPE_SUCCESS;
+            myHandler.sendMessage(message);
         }
 
         @Override
@@ -61,12 +64,18 @@ public class DwonloadService extends Service {
             stopForeground(true);
             getNotificationManager().notify(10,getNotification(getString(R.string.msg12),-1));
             Toast.makeText(DwonloadService.this,getString(R.string.msg12),Toast.LENGTH_LONG).show();
+            Message message=new Message();
+            message.what=Contest.TYPE_FAILED;
+            myHandler.sendMessage(message);
         }
 
         @Override
         public void onPaused() {
             downloadAsyn=null;
             Toast.makeText(DwonloadService.this,getString(R.string.msg13),Toast.LENGTH_LONG).show();
+            Message message=new Message();
+            message.what=Contest.TYPE_PAUSED;
+            myHandler.sendMessage(message);
         }
 
         @Override
@@ -75,6 +84,9 @@ public class DwonloadService extends Service {
             stopForeground(true);
             getNotificationManager().notify(10,getNotification(getString(R.string.msg14),-1));
             Toast.makeText(DwonloadService.this,getString(R.string.msg14),Toast.LENGTH_LONG).show();
+            Message message=new Message();
+            message.what=Contest.TYPE_CANCALED;
+            myHandler.sendMessage(message);
         }
     };
 

@@ -1,1 +1,1 @@
-include ':app', ':contactstext', ':rxpermissions'
+include ':app', ':contactstext', ':rxpermissions', ':txx5webviewdemo'

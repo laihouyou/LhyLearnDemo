@@ -32,7 +32,7 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
     private DwonloadService.DwonloadBudle budle;
     private MyHandler myHandler;
 
-    private static final String url="http://mapopen-pub-androidsdk.cdn.bcebos.com/map/sample/BaiduLBS_AndroidSDK_Sample.zip";
+    private static final String url="https://dlc2.pconline.com.cn/filedown_91888_11403716/HdaEplNV/UCBrowser_V6.2.4094.1_windows_pf101_(Build1807311500).exe";
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +98,27 @@ public class DwonloadActivity extends AppCompatActivity  implements View.OnClick
             DwonloadActivity activity=mActivity.get();
             if (activity!=null){
                switch (msg.what){
-                   case 1:
+                   case Contest.TYPE_DWONLOADING:
                        Bundle bundle=msg.getData();
                        if (bundle!=null){
                            int progess=bundle.getInt("progess");
                            activity.progressText.setText(progess+"%");
                            activity.progressBar.setProgress(progess);
                        }
+                       break;
+                   case Contest.TYPE_FAILED:
+                       activity.progressText.setText(activity.getString(R.string.msg12));
+                       activity.progressBar.setProgress(0);
+                       break;
+                   case Contest.TYPE_PAUSED:
+                       activity.progressText.setText(activity.getString(R.string.msg13));
+                       break;
+                   case Contest.TYPE_CANCALED:
+                       activity.progressText.setText(activity.getString(R.string.msg14));
+                       activity.progressBar.setProgress(0);
+                       break;
+                   case Contest.TYPE_SUCCESS:
+                       activity.progressText.setText(activity.getString(R.string.msg11));
                        break;
                }
             }
