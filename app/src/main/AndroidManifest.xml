@@ -9,12 +9,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!--android 9.0上使用前台服务，需要添加权限-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- android 9.0上使用前台服务，需要添加权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -23,23 +22,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".day1.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChatActivity">
+        <activity android:name=".day1.activity.ChatActivity">
         </activity>
-        <activity android:name=".activity.TextFragmentActivity">
+        <activity android:name=".day1.activity.TextFragmentActivity">
         </activity>
-        <activity android:name=".broadcast.activity.BroadcastTestActivity">
+        <activity android:name=".day1.broadcast.activity.BroadcastTestActivity">
         </activity>
         <activity
-            android:name=".broadcast.activity.LoginActivity"
+            android:name=".day1.broadcast.activity.LoginActivity"
             android:label="@string/title_activity_login">
-
         </activity>
 
         <service
@@ -58,6 +56,8 @@
         </service>
 
         <activity android:name=".day6_downtest.DwonloadActivity">
+        </activity>
+        <activity android:name=".day12_28_view.MyViewActivity">
         </activity>
     </application>
 

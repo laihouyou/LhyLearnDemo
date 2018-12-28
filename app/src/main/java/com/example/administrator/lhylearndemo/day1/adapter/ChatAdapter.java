@@ -1,4 +1,4 @@
-package com.example.administrator.lhylearndemo.adapter;
+package com.example.administrator.lhylearndemo.day1.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
-import com.example.administrator.lhylearndemo.vo.ChatVo;
+import com.example.administrator.lhylearndemo.day1.vo.ChatVo;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.administrator.lhylearndemo.broadcast.activity;
+package com.example.administrator.lhylearndemo.day1.broadcast.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import com.example.administrator.lhylearndemo.broadcast.utils.ActivityUtils;
+import com.example.administrator.lhylearndemo.day1.broadcast.utils.ActivityUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;

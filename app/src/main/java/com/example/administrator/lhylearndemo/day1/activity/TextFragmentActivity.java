@@ -1,11 +1,11 @@
-package com.example.administrator.lhylearndemo.activity;
+package com.example.administrator.lhylearndemo.day1.activity;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.administrator.lhylearndemo.R;
-import com.example.administrator.lhylearndemo.fragment.TextFragment1;
-import com.example.administrator.lhylearndemo.fragment.TextFragment2;
+import com.example.administrator.lhylearndemo.day1.fragment.TextFragment1;
+import com.example.administrator.lhylearndemo.day1.fragment.TextFragment2;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

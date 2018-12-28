@@ -1,10 +1,10 @@
-package com.example.administrator.lhylearndemo.activity;
+package com.example.administrator.lhylearndemo.day1.activity;
 
 import android.os.Bundle;
 
 import com.example.administrator.lhylearndemo.R;
-import com.example.administrator.lhylearndemo.adapter.ChatAdapter;
-import com.example.administrator.lhylearndemo.vo.ChatVo;
+import com.example.administrator.lhylearndemo.day1.adapter.ChatAdapter;
+import com.example.administrator.lhylearndemo.day1.vo.ChatVo;
 
 import java.util.ArrayList;
 import java.util.List;

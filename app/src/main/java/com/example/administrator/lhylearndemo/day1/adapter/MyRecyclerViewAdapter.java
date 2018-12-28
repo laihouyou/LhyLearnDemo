@@ -1,4 +1,4 @@
-package com.example.administrator.lhylearndemo.adapter;
+package com.example.administrator.lhylearndemo.day1.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.administrator.lhylearndemo.R;
-import com.example.administrator.lhylearndemo.broadcast.activity.BroadcastTestActivity;
-import com.example.administrator.lhylearndemo.activity.ChatActivity;
-import com.example.administrator.lhylearndemo.activity.TextFragmentActivity;
+import com.example.administrator.lhylearndemo.day1.broadcast.activity.BroadcastTestActivity;
+import com.example.administrator.lhylearndemo.day1.activity.ChatActivity;
+import com.example.administrator.lhylearndemo.day1.activity.TextFragmentActivity;
+import com.example.administrator.lhylearndemo.day12_28_view.MyViewActivity;
 import com.example.administrator.lhylearndemo.day5_service.activity.ServiceTextActivity;
 import com.example.administrator.lhylearndemo.day6_downtest.DwonloadActivity;
 
@@ -58,6 +59,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         break;
                     case 4:
                         mContext.startActivity(new Intent(mContext,DwonloadActivity.class));
+                        break;
+                    case 5:
+                        mContext.startActivity(new Intent(mContext,MyViewActivity.class));
                         break;
                 }
             }

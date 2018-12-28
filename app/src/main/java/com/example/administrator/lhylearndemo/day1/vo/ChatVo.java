@@ -1,4 +1,4 @@
-package com.example.administrator.lhylearndemo.vo;
+package com.example.administrator.lhylearndemo.day1.vo;
 
 public class ChatVo {
     private String data;

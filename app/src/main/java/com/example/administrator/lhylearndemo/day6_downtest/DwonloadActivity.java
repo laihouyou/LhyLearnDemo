@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.administrator.lhylearndemo.R;
-import com.example.administrator.lhylearndemo.utils.RxPermissionsUtil;
+import com.example.administrator.lhylearndemo.day1.utils.RxPermissionsUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
