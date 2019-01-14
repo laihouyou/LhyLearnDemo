@@ -11,17 +11,13 @@ import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.gddst.lhy.txx5webviewdemo.utils.FileUtils;
-import com.gddst.lhy.txx5webviewdemo.utils.RxPermissionsUtil;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,10 +45,9 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void initPerment() {
-        RxPermissionsUtil.requestEachRxPermission(this,
-                Manifest.permission.INTERNET
-        );
-
+//        RxPermissionsUtil.requestEachRxPermission(this,
+//                Manifest.permission.INTERNET
+//        );
 
         // 在要调用权限的activity中插入该方法。可以写到onCreate()中。
         // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
@@ -143,11 +138,11 @@ public class WebViewActivity extends AppCompatActivity {
                 super.onPageStarted(webView, s, bitmap);
             }
 
-            @Override
-            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
-                sslErrorHandler.proceed();  // 接受所有网站的证书
-                super.onReceivedSslError(webView, sslErrorHandler, sslError);
-            }
+//            @Override
+//            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
+//                sslErrorHandler.proceed();  // 接受所有网站的证书
+//                super.onReceivedSslError(webView, sslErrorHandler, sslError);
+//            }
 
             @Override
             public void onPageFinished(final WebView webView, String s) {
@@ -175,11 +170,11 @@ public class WebViewActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(url)&&
                 (Patterns.WEB_URL.matcher(url).matches() || URLUtil.isValidUrl(url))){
             x5WebView.loadUrl(url);
-            Toast.makeText(this,
-                    "如需修改url，请打开SD卡根目录下的"
-                            +getString(R.string.app_name)+
-                            "目录，打开url.txt文本，写入正确的url地址",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,
+//                    "如需修改url，请打开SD卡根目录下的"
+//                            +getString(R.string.app_name)+
+//                            "目录，打开url.txt文本，写入正确的url地址",
+//                    Toast.LENGTH_LONG).show();
         }else {
             AlertDialog alertDialog=new AlertDialog.Builder(this)
                     .setTitle("提示")
@@ -211,7 +206,7 @@ public class WebViewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(this, "文件目录已经创建好了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "文件目录已经创建好了", Toast.LENGTH_SHORT).show();
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 

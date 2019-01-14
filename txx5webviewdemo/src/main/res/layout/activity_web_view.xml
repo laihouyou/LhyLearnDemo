@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".WebViewActivity">
 
-    <com.tencent.smtt.sdk.WebView
+    <WebView
         android:id="@+id/x5WebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-    </com.tencent.smtt.sdk.WebView>
+    </WebView>
 
     <ProgressBar
         android:id="@+id/progressBar"
