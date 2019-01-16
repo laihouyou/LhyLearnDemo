@@ -1,18 +1,28 @@
 package com.example.administrator.lhylearndemo.day12_28_view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.administrator.lhylearndemo.R;
 
 import androidx.annotation.Nullable;
 
 public class MyView extends View {
+    private int defalutSize;
     public MyView(Context context) {
         super(context);
     }
 
     public MyView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        TypedArray typedArray =context.obtainStyledAttributes(attrs,R.styleable.MyView);
+        defalutSize=typedArray.getDimensionPixelSize(R.styleable.MyView_default_size,100);
+        typedArray.recycle();
     }
 
     public MyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -32,7 +42,18 @@ public class MyView extends View {
         setMeasuredDimension(width,height);
     }
 
-    private int getMySize(int deftsize,int measureSize){
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int r=getMeasuredHeight();
+        int pointX=getLeft()+r;
+        int pointY=getTop()+r;
+        Paint paint=new Paint();
+        paint.setColor(Color.GREEN);
+        canvas.drawCircle(pointX,pointY,r,paint);
+    }
+
+    private int getMySize(int deftsize, int measureSize){
         int dataSize=deftsize;
         int mode=MeasureSpec.getMode(measureSize);
         int size=MeasureSpec.getSize(measureSize);      //父控件提供给子view的参考大小
@@ -59,7 +80,7 @@ public class MyView extends View {
              * 当我们将控件的layout_width或layout_height指定为具体数值时 或者 match_parent
              */
             case MeasureSpec.EXACTLY:
-                dataSize=dataSize;
+                dataSize=size;
                 break;
         }
 
