@@ -1,4 +1,4 @@
-package com.example.administrator.lhylearndemo.day1_16to1_29_view_Animation.view动画;
+package com.example.administrator.lhylearndemo.day1_16to1_29_view_Animation.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

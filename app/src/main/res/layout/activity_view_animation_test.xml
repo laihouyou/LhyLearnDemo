@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".day1_16to1_29_view_Animation.view动画.ViewAnimationTest">
+    tools:context=".day1_16to1_29_view_Animation.view.ViewAnimationTest">
 
     <ImageView
         android:id="@+id/imageView1"

@@ -12,7 +12,7 @@ import com.example.administrator.lhylearndemo.day1.broadcast.activity.BroadcastT
 import com.example.administrator.lhylearndemo.day1.activity.ChatActivity;
 import com.example.administrator.lhylearndemo.day1.activity.TextFragmentActivity;
 import com.example.administrator.lhylearndemo.day12_28_view.MyViewActivity;
-import com.example.administrator.lhylearndemo.day1_16to1_29_view_Animation.view动画.ViewAnimationTest;
+import com.example.administrator.lhylearndemo.day1_16to1_29_view_Animation.view.ViewAnimationTest;
 import com.example.administrator.lhylearndemo.day5_service.activity.ServiceTextActivity;
 import com.example.administrator.lhylearndemo.day6_downtest.DwonloadActivity;
 
