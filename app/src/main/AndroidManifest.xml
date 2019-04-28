@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.administrator.lhylearndemo">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -18,9 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".day1_16to1_29_view_Animation.view.ViewAnimationTest">
-
-        </activity>
+        <activity android:name=".day19_4_28_viewpage2.ViewPage2Activity"></activity>
+        <activity android:name=".day1_16to1_29_view_Animation.view.ViewAnimationTest"></activity>
         <activity android:name=".day1.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,27 +27,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".day1.activity.ChatActivity"></activity>
-        <activity android:name=".day1.activity.TextFragmentActivity"></activity>
-        <activity android:name=".day1.broadcast.activity.BroadcastTestActivity"></activity>
+        <activity android:name=".day1.activity.ChatActivity" />
+        <activity android:name=".day1.activity.TextFragmentActivity" />
+        <activity android:name=".day1.broadcast.activity.BroadcastTestActivity" />
         <activity
             android:name=".day1.broadcast.activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
 
         <service
             android:name=".day5_service.service.MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".day5_service.activity.ServiceTextActivity"></activity>
+        <activity android:name=".day5_service.activity.ServiceTextActivity" />
 
         <service
             android:name=".day6_downtest.DwonloadService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".day6_downtest.DwonloadActivity"></activity>
-        <activity android:name=".day12_28_view.MyViewActivity"></activity>
+        <activity android:name=".day6_downtest.DwonloadActivity" />
+        <activity android:name=".day12_28_view.MyViewActivity" />
     </application>
 
 </manifest>

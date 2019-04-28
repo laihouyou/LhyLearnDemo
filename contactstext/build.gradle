@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion var.compileSdkVersion
 
     defaultConfig {
         applicationId "com.example.contactstext"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion var.minSdkVersion
+        targetSdkVersion var.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
