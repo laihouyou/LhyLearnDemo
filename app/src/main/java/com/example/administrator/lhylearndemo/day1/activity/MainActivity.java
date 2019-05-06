@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends BaseActivity {
     private String [] mDataList={
             "recycleview制作聊天界面","fragment动态加载，返回栈","广播接收器",
-            "服务","完整下载例子","自定义view_onMeasure","view动画","viewPage2增删改查"
+            "服务","完整下载例子","自定义view_onMeasure","view动画","viewPage2增删改查",
+            "kotlin初探"
     };
     private RecyclerView recyclerView;
     @Override

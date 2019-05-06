@@ -5,4 +5,5 @@
 
     <dimen name="spacer_large">20dp</dimen>
     <dimen name="spacer_small">5dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
