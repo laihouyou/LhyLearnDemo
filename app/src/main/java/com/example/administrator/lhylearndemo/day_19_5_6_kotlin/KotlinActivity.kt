@@ -32,7 +32,7 @@ class KotlinActivity : AppCompatActivity() {
 
     private fun initList() {
         recyclerview.layoutManager=layoutManager
-        recyclerview.adapter=KotlinAdapter(items)
+        recyclerview.adapter=KotlinAdapter(items,this)
     }
 
 

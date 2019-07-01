@@ -17,6 +17,7 @@ import com.example.administrator.lhylearndemo.day1_16to1_29_view_Animation.view.
 import com.example.administrator.lhylearndemo.day5_service.activity.ServiceTextActivity;
 import com.example.administrator.lhylearndemo.day6_downtest.DwonloadActivity;
 import com.example.administrator.lhylearndemo.day_19_5_6_kotlin.KotlinActivity;
+import com.example.administrator.lhylearndemo.day_19_7_1.LoadingPicActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -74,6 +75,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         break;
                     case 8:
                         mContext.startActivity(new Intent(mContext, KotlinActivity.class));
+                        break;
+                    case 9:
+                        mContext.startActivity(new Intent(mContext, LoadingPicActivity.class));
                         break;
                 }
             }

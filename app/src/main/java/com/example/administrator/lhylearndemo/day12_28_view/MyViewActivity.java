@@ -54,10 +54,12 @@ public class MyViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PictureSelector.create(MyViewActivity.this)
                         .openGallery(PictureMimeType.ofImage())
-                        .maxSelectNum(5)
-                        .minSelectNum(2)
+                        .maxSelectNum(10)// 最大图片选择数量 int
+                        .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                        .previewImage(false)// 是否可预览图片 true or false
+                        .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                        .setOutputCameraPath("/LHY测试照片")// 自定义拍照保存路径,可不填
                         .isZoomAnim(true)
-                        .selectionMode(PictureConfig.MULTIPLE)
                         .forResult(PictureConfig.CHOOSE_REQUEST);
             }
         });
@@ -78,7 +80,7 @@ public class MyViewActivity extends AppCompatActivity {
                     // 3.media.getCompressPath();为压缩后 path，需判断 media.isCompressed();是否为 true
                     // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
                     for(int i=0;i<selectList.size();i++){
-                        dummyItems.add(new DummyContent.DummyItem(i+"",selectList.get(i).getPath(),""));
+                        dummyItems.add(new DummyContent.DummyItem(i+"",selectList.get(i).getCompressPath(),""));
                     }
                     itemRecyclerViewAdapter.notifyDataSetChanged();
                     break;
